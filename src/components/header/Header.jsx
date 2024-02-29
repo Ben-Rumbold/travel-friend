@@ -1,8 +1,14 @@
 import React from "react";
 import "./Header.css";
+import Input from "../Input/Input";
 
 const Header = () => {
-  return <h1>Header</h1>;
+  return (
+    <div className="header-container">
+      <h1>Travel Friend</h1>
+      <Input />
+    </div>
+  );
 };
 
 export default Header;
