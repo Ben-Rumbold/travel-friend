@@ -1,0 +1,32 @@
+.input-container {
+  width: clamp(200px, 50%, 600px);
+  margin: 0 auto 30px auto;
+  display: flex;
+  justify-content: space-between;
+}
+.input-container input,
+.input-container button {
+  min-height: 35px;
+  border: none;
+  border-radius: 5px;
+  padding: 0 10px;
+  background-color: rgb(230, 230, 230);
+  box-shadow: 0 4px 2px -2px rgb(175, 175, 175, 0.5);
+}
+.input-container input:hover,
+.input-container button:hover {
+  background-color: rgb(200, 200, 200);
+}
+.input-container input {
+  width: 75%;
+}
+.input-container button {
+  width: 20%;
+}
+.test-text-container {
+  min-height: 100px;
+  width: 300px;
+  margin: 0 auto;
+  padding-top: 20px;
+  background-color: white;
+}
