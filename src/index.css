@@ -5,9 +5,14 @@
   padding: 0;
   box-sizing: border-box;
 }
-hello body {
+body {
+  background-color: rgb(241, 241, 241);
   max-width: 100%;
   overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 50px;
 }
 h1 {
   font-size: clamp(40px, 4vw, 60px);

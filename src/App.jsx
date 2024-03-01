@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-
-import Header from "./components/header/Header";
-import Input from "./components/Input/Input";
-
+import Input from "./components/input/Input";
+import HotelsResults from "./components/hotels-results/HotelsResults";
+import RestaurantsResults from "./components/restaurants-results/RestaurantsResults";
 
 const App = () => {
+  const [submittedInput, setSubmittedInput] = useState("");
+
+  const handleSubmit = (input) => {
+    setSubmittedInput(input);
+  };
+
   return (
     <>
-      <Header />
-      <Input />
+      <Input onSubmit={handleSubmit} />
+      <HotelsResults submittedInput={submittedInput} />
+      <RestaurantsResults submittedInput={submittedInput} />
     </>
   );
 };
