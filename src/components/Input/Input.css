@@ -1,6 +1,6 @@
 .input-container {
   width: clamp(300px, 50%, 600px);
-  margin: 0 auto 30px auto;
+  margin: 0 auto 15px auto;
   display: flex;
   justify-content: space-between;
 }
@@ -10,23 +10,25 @@
   border: none;
   border-radius: 5px;
   padding: 0 10px;
-  background-color: rgb(230, 230, 230);
   box-shadow: 0 4px 2px -2px rgb(175, 175, 175, 0.5);
-}
-.input-container input:hover,
-.input-container button:hover {
-  background-color: rgb(200, 200, 200);
 }
 .input-container input {
   width: 73%;
 }
 .input-container button {
   width: 25%;
+  background-color: #ffe800;
+  transition: all 0.3s ease;
 }
-.test-text-container {
-  min-height: 100px;
-  width: 300px;
-  margin: 0 auto;
-  padding-top: 20px;
-  background-color: white;
+.input-container button:hover {
+  background-color: #fadd00;
+  cursor: pointer;
+}
+
+.loading-text-container {
+  position: absolute;
+  /* bottom: -30; */
+  width: 100%;
+  text-align: center;
+  color: rgb(0, 170, 0);
 }

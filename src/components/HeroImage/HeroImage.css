@@ -1,0 +1,39 @@
+/* HeroImage.css */
+.hero-img-outer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+.hero-img-outer-container p {
+  margin-inline: 10px;
+}
+.hero-image-img-container {
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+  margin-top: auto;
+}
+.hero-image-img-container img {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .hero-img-outer-container {
+    width: 80%;
+    margin-inline: auto;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .hero-img-outer-container {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .hero-img-outer-container {
+    width: 100%;
+  }
+}

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./RestaurantsResults.css";
+import Card from "../Card/Card";
+import HeroImage from "../HeroImage/HeroImage";
+import RestaurantHeroImage from "../../assets/images/hero-restaurants.webp";
 
 const RestaurantsResults = ({ submittedInput }) => {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
-  const imageSize = { width: '300px', height: '300px' };
 
   useEffect(() => {
     const searchFunc = async () => {
@@ -17,7 +19,6 @@ const RestaurantsResults = ({ submittedInput }) => {
           },
         };
 
-        // Fetch hotels
         console.log("Fetching hotels data...");
         const hotelsResponse = await fetch(
           `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}&sort=POPULARITY`,
@@ -36,18 +37,23 @@ const RestaurantsResults = ({ submittedInput }) => {
           );
 
           if (!hotelImagesResponse.ok) {
-            console.error(`Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`);
-            return { ...hotel, imageUrl: '' }; // Return hotel with no image URL
+            console.error(
+              `Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`
+            );
+            return { ...hotel, imageUrl: "" }; // Return hotel with no image URL
           }
 
           const hotelImagesData = await hotelImagesResponse.json();
-          console.log(`Fetched images for hotel ${hotel.fsq_id}:`, hotelImagesData); // Log fetched images for each hotel
+          console.log(
+            `Fetched images for hotel ${hotel.fsq_id}:`,
+            hotelImagesData
+          ); // Log fetched images for each hotel
 
           if (hotelImagesData && hotelImagesData.length > 0) {
             const { prefix, suffix } = hotelImagesData[0];
             hotel.imageUrl = `${prefix}original${suffix}`;
           } else {
-            hotel.imageUrl = ''; // Default image or leave as blank
+            hotel.imageUrl = ""; // Default image or leave as blank
           }
           return hotel;
         });
@@ -55,7 +61,6 @@ const RestaurantsResults = ({ submittedInput }) => {
         // Wait for all hotel images to be fetched
         const hotelsWithImages = await Promise.all(hotelImagePromises);
         setHotels(hotelsWithImages);
-
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(error.message);
@@ -68,36 +73,38 @@ const RestaurantsResults = ({ submittedInput }) => {
   }, [submittedInput]);
 
   return (
-    <div className="results-container hotels-results">
-      <h1>Restaurants Results</h1>
-      <p>{submittedInput}</p>
-      {error ? (
-        <p>Error fetching data: {error}</p>
-      ) : (
-        <div className="hotels-list">
-          {hotels.map((hotel, index) => (
-            <div key={index} className="hotel-card">
-              <p className="hotel-name">{hotel.name}</p>
-              <p className="hotel-address">{hotel.location && hotel.location.formatted_address}</p>
-              <div className="image-container"> {/* Wrapper div for the image */}
-                <img
-                  src={hotel.imageUrl || 'https://via.placeholder.com/300'}
-                  alt={hotel.name}
-                  style={imageSize}
-                  className="hotel-image"
-                />
-              </div>
+    <>
+      {submittedInput ? (
+        <div className="results-container resturants-results-container">
+          <h1>Restaurants</h1>
+          <p className="display-6">{submittedInput}</p>
+          {error ? (
+            <p>Error fetching data: {error}</p>
+          ) : (
+            <div className="restaurants-list">
+              {hotels.map((hotel, index) => (
+                <Card
+                  key={index}
+                  name={hotel.name}
+                  address={hotel.location && hotel.location.formatted_address}
+                  image={hotel.imageUrl}
+                ></Card>
+              ))}
             </div>
-          ))}
+          )}
         </div>
+      ) : (
+        <HeroImage
+          title="Restaurants"
+          subheading="Embark on a journey of taste with our curated list of dining hot-spots"
+          image={RestaurantHeroImage}
+        />
       )}
-    </div>
+    </>
   );
 };
 
 export default RestaurantsResults;
-
-
 
 //WORKING - with all CITIES!!!!
 // import React, { useState, useEffect } from "react";
@@ -191,7 +198,6 @@ export default RestaurantsResults;
 
 // export default HotelsResults;
 
-
 //WORKING 1st attempt
 // import React, { useState, useEffect } from "react";
 // import "./HotelsResults.css";
@@ -269,4 +275,3 @@ export default RestaurantsResults;
 // };
 
 // export default HotelsResults;
-

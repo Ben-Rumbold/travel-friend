@@ -7,7 +7,7 @@ import Nav from "../../components/Nav/Nav";
 import Input from "../../components/Input/Input";
 import HotelsResults from "../../components/HotelsResults/HotelsResults";
 import RestaurantsResults from "../../components/RestaurantsResults/RestaurantsResults";
-import PlaceholderImage from "../../components/PlaceholderImage/PlaceholderImage";
+// import PlaceholderImage from "../../components/PlaceholderImage/PlaceholderImage";
 
 const Home = () => {
   const [submittedInput, setSubmittedInput] = useState("");
@@ -19,15 +19,17 @@ const Home = () => {
     <>
       <Nav />
       <Input onSubmit={handleSubmit} />
-      <HotelsResults submittedInput={submittedInput} />
-      <RestaurantsResults submittedInput={submittedInput} />
+      <div className="both-results-container">
+        <HotelsResults submittedInput={submittedInput} />
+        <RestaurantsResults submittedInput={submittedInput} />
+      </div>
     </>
   );
 };
 
 export default Home;
 
-// vilma conditional rendering of place holder image
+// vilma conditional rendering of place holder image (note: ben renders the load-in images inside their respective components)
 // {
 //   submittedInput ? (
 //     <>

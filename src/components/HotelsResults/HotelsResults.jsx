@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./HotelsResults.css";
+import Card from "../Card/Card";
+import HeroImage from "../HeroImage/HeroImage";
+import HotelHeroImage from "../../assets/images/hero-hotel.webp";
 
 const HotelsResults = ({ submittedInput }) => {
   const [hotels, setHotels] = useState([]);
@@ -28,12 +31,20 @@ const HotelsResults = ({ submittedInput }) => {
         const hotelImagePromises = hotelsData.results.map(async (hotel) => {
           console.log(`Fetching images/details for hotel ${hotel.fsq_id}...`);
 
-          const hotelDetailsResponse = await fetch(`https://api.foursquare.com/v3/places/${hotel.fsq_id}/`, options);
+          const hotelDetailsResponse = await fetch(
+            `https://api.foursquare.com/v3/places/${hotel.fsq_id}/`,
+            options
+          );
           if (hotelDetailsResponse.ok) {
             const hotelDetailsData = await hotelDetailsResponse.json();
-            console.log(`Fetched details for hotel ${hotel.fsq_id}:`, hotelDetailsData);
+            console.log(
+              `Fetched details for hotel ${hotel.fsq_id}:`,
+              hotelDetailsData
+            );
           } else {
-            console.error(`Error fetching details for hotel ${hotel.fsq_id}: ${hotelDetailsResponse.statusText}`);
+            console.error(
+              `Error fetching details for hotel ${hotel.fsq_id}: ${hotelDetailsResponse.statusText}`
+            );
           }
 
           const hotelImagesResponse = await fetch(
@@ -42,25 +53,29 @@ const HotelsResults = ({ submittedInput }) => {
           );
 
           if (!hotelImagesResponse.ok) {
-            console.error(`Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`);
-            return { ...hotel, imageUrl: '' };
+            console.error(
+              `Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`
+            );
+            return { ...hotel, imageUrl: "" };
           }
 
           const hotelImagesData = await hotelImagesResponse.json();
-          console.log(`Fetched images for hotel ${hotel.fsq_id}:`, hotelImagesData);
+          console.log(
+            `Fetched images for hotel ${hotel.fsq_id}:`,
+            hotelImagesData
+          );
 
           if (hotelImagesData && hotelImagesData.length > 0) {
             const { prefix, suffix } = hotelImagesData[0];
             hotel.imageUrl = `${prefix}original${suffix}`;
           } else {
-            hotel.imageUrl = '';
+            hotel.imageUrl = "";
           }
           return hotel;
         });
 
         const hotelsWithImages = await Promise.all(hotelImagePromises);
         setHotels(hotelsWithImages);
-
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(error.message);
@@ -73,34 +88,38 @@ const HotelsResults = ({ submittedInput }) => {
   }, [submittedInput]);
 
   return (
-    <div className="results-container hotels-results">
-      <h1>Hotels Results</h1>
-      <p>{submittedInput}</p>
-      {error ? (
-        <p>Error fetching data: {error}</p>
-      ) : (
-        <div className="hotels-list">
-          {hotels.map((hotel, index) => (
-            <div key={index} className="hotel-card">
-              <p className="hotel-name">{hotel.name}</p>
-              <p className="hotel-address">{hotel.location && hotel.location.formatted_address}</p>
-              <img
-                src={hotel.imageUrl || 'https://via.placeholder.com/300'}
-                alt={hotel.name}
-                className="hotel-image"
-              />
+    <>
+      {submittedInput ? (
+        <div className="results-container resturants-results-container">
+          <h1>Hotels</h1>
+          <p className="display-6">{submittedInput}</p>
+          {error ? (
+            <p>Error fetching data: {error}</p>
+          ) : (
+            <div className="restaurants-list">
+              {hotels.map((hotel, index) => (
+                <Card
+                  key={index}
+                  name={hotel.name}
+                  address={hotel.location && hotel.location.formatted_address}
+                  image={hotel.imageUrl}
+                ></Card>
+              ))}
             </div>
-          ))}
+          )}
         </div>
+      ) : (
+        <HeroImage
+          title="Hotels"
+          subheading="Explore hidden gems in the world of hospitality with our selection of unique and undiscovered hotels"
+          image={HotelHeroImage}
+        />
       )}
-    </div>
+    </>
   );
 };
 
 export default HotelsResults;
-
-
-
 
 //WORKING - with all CITIES!!!!
 // import React, { useState, useEffect } from "react";
@@ -194,7 +213,6 @@ export default HotelsResults;
 
 // export default HotelsResults;
 
-
 //WORKING 1st attempt
 // import React, { useState, useEffect } from "react";
 // import "./HotelsResults.css";
@@ -272,4 +290,3 @@ export default HotelsResults;
 // };
 
 // export default HotelsResults;
-

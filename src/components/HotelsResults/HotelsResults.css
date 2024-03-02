@@ -1,34 +1,40 @@
+/* HotelsResults.css */
 .results-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 }
 
 .hotels-list {
+  margin: 10px auto 20px auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 600px;
 }
 
-.hotel-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
+@media only screen and (max-width: 1000px) {
+  .hotels-results-container {
+    margin-top: 30px;
+  }
+  .hotels-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-.hotel-name,
-.hotel-address {
-  margin: 10px;
+@media only screen and (max-width: 670px) {
+  .hotels-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.hotel-image {
-  width: 100%; /* Make the image fill the container width */
-  height: 200px; /* Set a fixed height */
-  object-fit: cover; /* Cover the area without stretching the image */
+@media only screen and (max-width: 390px) {
+  .hotels-list {
+    grid-template-columns: 1fr;
+  }
+  .results-container {
+    width: 90%;
+    margin: 0 auto;
+  }
 }
