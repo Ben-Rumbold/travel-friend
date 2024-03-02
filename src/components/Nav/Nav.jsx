@@ -1,9 +1,8 @@
 // Nav.jsx
-
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Nav.css'; // Import CSS for navigation styling
-import logo from "../../assets/images/travel-logo.svg"; // Update import path for logo
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Nav.css";
+import logo from "../../assets/images/travel-logo.svg";
 
 const Nav = () => {
   return (
