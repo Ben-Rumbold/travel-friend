@@ -1,73 +1,61 @@
-/* Navigation.css */
+/* Nav.css */
 .nav-container {
   background-color: #383838;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 10px 30px;
+  margin-bottom: 40px;
 }
-
+.logo-title-container {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 100px;
+  height: auto;
+}
 .nav-title {
-  margin: 0;
+  margin: 0px 0px 0px 20px;
 }
-
 .nav-links {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
+  gap: 1rem;
 }
-
-.nav-links li {
-  margin-right: 1rem;
-}
-
-.nav-links li:last-child {
-  margin-right: 0;
-}
-
 .nav-links a {
   color: white;
   text-decoration: none;
   transition: color 0.3s ease;
 }
-
 .nav-links a:hover {
-  color: #ffd700; /* Change color on hover */
+  color: #ffd700;
 }
-
-/* Nav.css */
-
-.nav-container {
-  display: flex; /* Use flexbox layout */
-  align-items: center; /* Align items vertically in the center */
-  justify-content: space-between; /* Distribute space between items */
-}
-
-.logo-title-container {
-  display: flex; /* Use flexbox layout for logo and title */
-  align-items: center; /* Align items vertically in the center */
-}
-
-.logo {
-  width: 100px; /* Adjust the width of the logo as needed */
-  height: auto; /* Ensure the aspect ratio of the logo is maintained */
-}
-
-.nav-title {
-  margin-left: 10px; /* Add margin between the logo and title */
-}
-
-.nav-links {
-  list-style-type: none; /* Remove default list style */
-  display: flex; /* Use flexbox layout for the navigation links */
-}
-
 .nav-links li {
-  margin-right: 20px; /* Add margin between navigation links */
+  margin-right: 20px;
+}
+.nav-links li:last-child {
+  margin-right: 0;
 }
 
-.nav-links li:last-child {
-  margin-right: 0; /* Remove margin from the last navigation link */
+/* media queries */
+@media only screen and (max-width: 700px) {
+  .nav-container {
+    padding: 10px 20px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .nav-links {
+    flex-direction: column;
+    height: 96px;
+    justify-content: space-around;
+    gap: 0;
+  }
+  .nav-container {
+    padding: 10px;
+  }
 }

@@ -1,3 +1,5 @@
+/* index.css */
+/* css reset */
 *,
 *::before,
 *::after {
@@ -5,15 +7,34 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* general/ all */
 body {
   background-color: rgb(241, 241, 241);
-  max-width: 100%;
+  /* max-width: 100%; */
   overflow-x: hidden;
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 50px;
 }
+#root {
+  width: 100%;
+}
+::-webkit-scrollbar {
+  width: clamp(8px, 1vw, 15px);
+}
+::-webkit-scrollbar-track {
+  background: rgb(240, 240, 240);
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 0, 0, 0.3);
+  border-radius: 100vw;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 0, 0, 0.4);
+}
+
+/* text/ font */
 h1 {
   font-size: clamp(40px, 4vw, 60px);
 }
