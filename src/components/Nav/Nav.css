@@ -1,0 +1,73 @@
+/* Navigation.css */
+.nav-container {
+  background-color: #383838;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.nav-title {
+  margin: 0;
+}
+
+.nav-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 1rem;
+}
+
+.nav-links li:last-child {
+  margin-right: 0;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffd700; /* Change color on hover */
+}
+
+/* Nav.css */
+
+.nav-container {
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Align items vertically in the center */
+  justify-content: space-between; /* Distribute space between items */
+}
+
+.logo-title-container {
+  display: flex; /* Use flexbox layout for logo and title */
+  align-items: center; /* Align items vertically in the center */
+}
+
+.logo {
+  width: 100px; /* Adjust the width of the logo as needed */
+  height: auto; /* Ensure the aspect ratio of the logo is maintained */
+}
+
+.nav-title {
+  margin-left: 10px; /* Add margin between the logo and title */
+}
+
+.nav-links {
+  list-style-type: none; /* Remove default list style */
+  display: flex; /* Use flexbox layout for the navigation links */
+}
+
+.nav-links li {
+  margin-right: 20px; /* Add margin between navigation links */
+}
+
+.nav-links li:last-child {
+  margin-right: 0; /* Remove margin from the last navigation link */
+}

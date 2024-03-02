@@ -3,6 +3,8 @@ import "./HotelsResults.css";
 
 const HotelsResults = ({ submittedInput }) => {
   const [hotels, setHotels] = useState([]);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const searchFunc = async () => {
       try {
@@ -13,32 +15,55 @@ const HotelsResults = ({ submittedInput }) => {
             Authorization: "fsq3wrjkEMRMvGBIa2/fpCLmspitXq47BrMxfAzL0IjHgxU=",
           },
         };
-        // Fetch hotels
+
+        console.log("Fetching hotels data...");
         const hotelsResponse = await fetch(
-          `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}`,
+          `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}&sort=POPULARITY`,
           options
         );
 
-        // Hotel data
         const hotelsData = await hotelsResponse.json();
-        setHotels(hotelsData.results || []);
-        console.log(hotelsData.results);
+        console.log("Fetched hotels data:", hotelsData);
 
-        // Old Fetch hotel images
-        const hotelImagesResponse = await fetch(
-          `https://api.foursquare.com/v3/places/${hotelsData.results[0].fsq_id}/photos`,
-          options
-        );
-        const hotelImagesData = await hotelImagesResponse.json();
-        console.log(hotelImagesData);
+        const hotelImagePromises = hotelsData.results.map(async (hotel) => {
+          console.log(`Fetching images/details for hotel ${hotel.fsq_id}...`);
 
-        // Old test image console log
-        const testPrefix = hotelImagesData[0].prefix;
-        const testSuffix = hotelImagesData[0].suffix;
-        const testImageUrl = `${testPrefix}original${testSuffix}`;
-        console.log(testImageUrl);
+          const hotelDetailsResponse = await fetch(`https://api.foursquare.com/v3/places/${hotel.fsq_id}/`, options);
+          if (hotelDetailsResponse.ok) {
+            const hotelDetailsData = await hotelDetailsResponse.json();
+            console.log(`Fetched details for hotel ${hotel.fsq_id}:`, hotelDetailsData);
+          } else {
+            console.error(`Error fetching details for hotel ${hotel.fsq_id}: ${hotelDetailsResponse.statusText}`);
+          }
+
+          const hotelImagesResponse = await fetch(
+            `https://api.foursquare.com/v3/places/${hotel.fsq_id}/photos?classifications=indoor%2Coutdoor`,
+            options
+          );
+
+          if (!hotelImagesResponse.ok) {
+            console.error(`Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`);
+            return { ...hotel, imageUrl: '' };
+          }
+
+          const hotelImagesData = await hotelImagesResponse.json();
+          console.log(`Fetched images for hotel ${hotel.fsq_id}:`, hotelImagesData);
+
+          if (hotelImagesData && hotelImagesData.length > 0) {
+            const { prefix, suffix } = hotelImagesData[0];
+            hotel.imageUrl = `${prefix}original${suffix}`;
+          } else {
+            hotel.imageUrl = '';
+          }
+          return hotel;
+        });
+
+        const hotelsWithImages = await Promise.all(hotelImagePromises);
+        setHotels(hotelsWithImages);
+
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError(error.message);
       }
     };
 
@@ -46,36 +71,44 @@ const HotelsResults = ({ submittedInput }) => {
       searchFunc();
     }
   }, [submittedInput]);
+
   return (
     <div className="results-container hotels-results">
       <h1>Hotels Results</h1>
       <p>{submittedInput}</p>
-      <div>
-        <h2>Hotels</h2>
-        {hotels.length ? (
-          hotels.map((hotel, index) => (
-            <div key={index}>
-              <p>{hotel.name}</p>
+      {error ? (
+        <p>Error fetching data: {error}</p>
+      ) : (
+        <div className="hotels-list">
+          {hotels.map((hotel, index) => (
+            <div key={index} className="hotel-card">
+              <p className="hotel-name">{hotel.name}</p>
+              <p className="hotel-address">{hotel.location && hotel.location.formatted_address}</p>
+              <img
+                src={hotel.imageUrl || 'https://via.placeholder.com/300'}
+                alt={hotel.name}
+                className="hotel-image"
+              />
             </div>
-          ))
-        ) : (
-          <p>Loading hotels...</p>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
 export default HotelsResults;
 
+
+
+
+//WORKING - with all CITIES!!!!
 // import React, { useState, useEffect } from "react";
 // import "./HotelsResults.css";
 
 // const HotelsResults = ({ submittedInput }) => {
 //   const [hotels, setHotels] = useState([]);
-//   const [hotelImages, setHotelImages] = useState([]);
-
-//   console.log(hotelImages);
+//   const [error, setError] = useState(null);
 
 //   useEffect(() => {
 //     const searchFunc = async () => {
@@ -87,39 +120,126 @@ export default HotelsResults;
 //             Authorization: "fsq3wrjkEMRMvGBIa2/fpCLmspitXq47BrMxfAzL0IjHgxU=",
 //           },
 //         };
+
+//         // Fetch hotels
+//         console.log("Fetching hotels data...");
+//         const hotelsResponse = await fetch(
+//           `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}&sort=POPULARITY`,
+//           options
+//         );
+
+//         const hotelsData = await hotelsResponse.json();
+//         console.log("Fetched hotels data:", hotelsData); // Log fetched hotels data
+
+//         const hotelImagePromises = hotelsData.results.map(async (hotel) => {
+//           // Fetch hotel images
+//           console.log(`Fetching images for hotel ${hotel.fsq_id}...`);
+//           const hotelImagesResponse = await fetch(
+//             `https://api.foursquare.com/v3/places/${hotel.fsq_id}/photos?classifications=indoor%2Coutdoor`,
+//             options
+//           );
+
+//           if (!hotelImagesResponse.ok) {
+//             console.error(`Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`);
+//             return { ...hotel, imageUrl: '' }; // Return hotel with no image URL
+//           }
+
+//           const hotelImagesData = await hotelImagesResponse.json();
+//           console.log(`Fetched images for hotel ${hotel.fsq_id}:`, hotelImagesData); // Log fetched images for each hotel
+
+//           if (hotelImagesData && hotelImagesData.length > 0) {
+//             const { prefix, suffix } = hotelImagesData[0];
+//             hotel.imageUrl = `${prefix}original${suffix}`;
+//           } else {
+//             hotel.imageUrl = ''; // Default image or leave as blank
+//           }
+//           return hotel;
+//         });
+
+//         // Wait for all hotel images to be fetched
+//         const hotelsWithImages = await Promise.all(hotelImagePromises);
+//         setHotels(hotelsWithImages);
+
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//         setError(error.message);
+//       }
+//     };
+
+//     if (submittedInput) {
+//       searchFunc();
+//     }
+//   }, [submittedInput]);
+
+//   return (
+//     <div className="results-container hotels-results">
+//       <h1>Hotels Results</h1>
+//       <p>{submittedInput}</p>
+//       {error ? (
+//         <p>Error fetching data: {error}</p>
+//       ) : (
+//         <div className="hotels-list">
+//           {hotels.map((hotel, index) => (
+//             <div key={index} className="hotel-card">
+//               <p className="hotel-name">{hotel.name}</p>
+//               <p className="hotel-address">{hotel.location && hotel.location.formatted_address}</p>
+//               {hotel.imageUrl && <img src={hotel.imageUrl} alt={hotel.name} className="hotel-image" />}
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default HotelsResults;
+
+
+//WORKING 1st attempt
+// import React, { useState, useEffect } from "react";
+// import "./HotelsResults.css";
+
+// const HotelsResults = ({ submittedInput }) => {
+//   const [hotels, setHotels] = useState([]);
+
+//   useEffect(() => {
+//     const searchFunc = async () => {
+//       try {
+//         const options = {
+//           method: "GET",
+//           headers: {
+//             accept: "application/json",
+//             Authorization: "fsq3wrjkEMRMvGBIa2/fpCLmspitXq47BrMxfAzL0IjHgxU=",
+//           },
+//         };
+
 //         // Fetch hotels
 //         const hotelsResponse = await fetch(
 //           `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}`,
 //           options
 //         );
 
-//         // Hotel data
 //         const hotelsData = await hotelsResponse.json();
-//         setHotels(hotelsData.results || []);
-//         console.log(hotelsData.results);
 
-//         // Fetch hotel images for each hotel
-//         const imagePromises = hotelsData.results.map(async (hotel) => {
+//         const hotelImagePromises = hotelsData.results.map(async (hotel) => {
 //           const hotelImagesResponse = await fetch(
 //             `https://api.foursquare.com/v3/places/${hotel.fsq_id}/photos`,
 //             options
 //           );
 //           const hotelImagesData = await hotelImagesResponse.json();
-//           return hotelImagesData;
-//         });
-
-//         const allHotelImages = await Promise.all(imagePromises);
-//         setHotelImages(allHotelImages);
-//         console.log(allHotelImages);
-
-//         // Logging each image URL
-//         allHotelImages.forEach((images, index) => {
-//           const firstImage = images[0];
-//           if (firstImage) {
-//             const imageUrl = `${firstImage.prefix}original${firstImage.suffix}`;
-//             console.log(`Hotel ${index + 1} Image URL: ${imageUrl}`);
+//           if (hotelImagesData && hotelImagesData.length > 0) {
+//             const { prefix, suffix } = hotelImagesData[0];
+//             hotel.imageUrl = `${prefix}original${suffix}`;
+//           } else {
+//             hotel.imageUrl = ''; // Default image or leave as blank
 //           }
+//           return hotel;
 //         });
+
+//         // Wait for all hotel images to be fetched
+//         const hotelsWithImages = await Promise.all(hotelImagePromises);
+//         setHotels(hotelsWithImages);
+
 //       } catch (error) {
 //         console.error("Error fetching data:", error);
 //       }
@@ -140,6 +260,7 @@ export default HotelsResults;
 //           hotels.map((hotel, index) => (
 //             <div key={index}>
 //               <p>{hotel.name}</p>
+//               {hotel.imageUrl && <img src={hotel.imageUrl} alt={hotel.name} style={{ width: '100px', height: '100px' }} />}
 //             </div>
 //           ))
 //         ) : (
@@ -151,3 +272,4 @@ export default HotelsResults;
 // };
 
 // export default HotelsResults;
+
