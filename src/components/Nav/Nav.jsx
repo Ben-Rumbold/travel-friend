@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Nav.css";
-import logo from "../../assets/images/travel-logo.svg";
+import logo from "/assets/images/travel-logo.svg";
 
 const Nav = () => {
   return (

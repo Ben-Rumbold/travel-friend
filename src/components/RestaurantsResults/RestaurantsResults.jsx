@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./RestaurantsResults.css";
 import Card from "../Card/Card";
 import HeroImage from "../HeroImage/HeroImage";
-import RestaurantHeroImage from "../../assets/images/hero-restaurants.webp";
+import RestaurantHeroImage from "/assets/images/hero-restaurants.webp";
 
 const RestaurantsResults = ({ submittedInput }) => {
   const [hotels, setHotels] = useState([]);
