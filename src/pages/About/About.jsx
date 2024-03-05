@@ -9,7 +9,7 @@ const About = () => {
   return (
     <>
       <Nav />
-      <div  className="container" >
+      <div className="about_container" >
         <h2>About Us</h2>
         <p>
           Welcome to Travel Friend, your go-to destination for seamless travel experiences! At Travel Friend, we understand that the key to an unforgettable journey lies not only in the destination but also in the comfort and convenience of your
@@ -22,35 +22,35 @@ const About = () => {
           Our mission is to simplify your travel planning by providing a one-stop solution for finding the nearest hotels and restaurants in your desired location. We believe that every traveller deserves a hassle-free experience, and that's exactly
           what we aim to deliver.
         </p>
-<div class ="flex-container">
-  <div class ="card">
-        <h3>What We Offer </h3>
-        <ul>
-          <li>
-            <strong>Precision in Location:</strong> We pride ourselves on the accuracy of our search results...
-          </li>
-          <li>
-            <strong>Comprehensive Information:</strong> We go beyond just listing options...
-          </li>
-          <li>
-            <strong>User-Friendly Interface:</strong> Navigating through our website is as easy as a breeze...
-          </li>
-        </ul>
-</div>
-<div class ="card">
-        <h3>How It Works</h3>
-        <ol>
-          <li>
-            <strong>Search:</strong> Enter your desired location, and let our intelligent search engine do the work for you...
-          </li>
-          <li>
-            <strong>Compare:</strong> Browse through a curated list of the nearest hotels and restaurants...
-          </li>
-          <li>
-            <strong>Book with Confidence:</strong> Once you've made your decision, you can book directly through our platform...
-          </li>
-        </ol>
-        </div>
+        <div className="flex-container">
+          <div className="card">
+            <h3>What We Offer </h3>
+            <ul>
+              <li>
+                <strong>Precision in Location:</strong> We pride ourselves on the accuracy of our search results...
+              </li>
+              <li>
+                <strong>Comprehensive Information:</strong> We go beyond just listing options...
+              </li>
+              <li>
+                <strong>User-Friendly Interface:</strong> Navigating through our website is as easy as a breeze...
+              </li>
+            </ul>
+          </div>
+          <div className="card">
+            <h3>How It Works</h3>
+            <ol>
+              <li>
+                <strong>Search:</strong> Enter your desired location, and let our intelligent search engine do the work for you...
+              </li>
+              <li>
+                <strong>Compare:</strong> Browse through a curated list of the nearest hotels and restaurants...
+              </li>
+              <li>
+                <strong>Book with Confidence:</strong> Once you've made your decision, you can book directly through our platform...
+              </li>
+            </ol>
+          </div>
         </div>
         <h3>Our Commitment to You</h3>
         <p>
