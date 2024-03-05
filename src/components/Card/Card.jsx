@@ -1,8 +1,16 @@
+import { motion } from "framer-motion";
 import "./Card.css";
 
 const Card = ({ name, address, image }) => {
   return (
-    <div className="results-card">
+    <motion.div
+      className="results-card"
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0px 4px 4px 2px rgb(150, 150, 150)",
+        transition: { duration: 0.3 },
+      }}
+    >
       <div className="results-card-img-container">
         <img
           src={image || "https://source.unsplash.com/collection/1028299/?1"}
@@ -13,11 +21,11 @@ const Card = ({ name, address, image }) => {
         <h5>{name}</h5>
         <p>{address}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default Card;
 
-// might be useful (previou alternative for card image if error)
+// might be useful (previous alternative for card image if error)
 ("https://via.placeholder.com/300");

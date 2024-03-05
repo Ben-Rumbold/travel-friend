@@ -19,18 +19,18 @@ const RestaurantsResults = ({ submittedInput }) => {
           },
         };
 
-        console.log("Fetching hotels data...");
+        // console.log("Fetching hotels data...");
         const hotelsResponse = await fetch(
-          `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}&sort=POPULARITY`,
+          `https://api.foursquare.com/v3/places/search?query=restaurants&near=${submittedInput}&sort=POPULARITY`,
           options
         );
 
         const hotelsData = await hotelsResponse.json();
-        console.log("Fetched hotels data:", hotelsData); // Log fetched hotels data
+        // console.log("Fetched hotels data:", hotelsData);
 
         const hotelImagePromises = hotelsData.results.map(async (hotel) => {
           // Fetch hotel images
-          console.log(`Fetching images for hotel ${hotel.fsq_id}...`);
+          // console.log(`Fetching images for hotel ${hotel.fsq_id}...`);
           const hotelImagesResponse = await fetch(
             `https://api.foursquare.com/v3/places/${hotel.fsq_id}/photos?classifications=food`,
             options
@@ -40,20 +40,20 @@ const RestaurantsResults = ({ submittedInput }) => {
             console.error(
               `Error fetching images for hotel ${hotel.fsq_id}: ${hotelImagesResponse.status}`
             );
-            return { ...hotel, imageUrl: "" }; // Return hotel with no image URL
+            return { ...hotel, imageUrl: "" };
           }
 
           const hotelImagesData = await hotelImagesResponse.json();
-          console.log(
-            `Fetched images for hotel ${hotel.fsq_id}:`,
-            hotelImagesData
-          ); // Log fetched images for each hotel
+          // console.log(
+          //   `Fetched images for hotel ${hotel.fsq_id}:`,
+          //   hotelImagesData
+          // );
 
           if (hotelImagesData && hotelImagesData.length > 0) {
             const { prefix, suffix } = hotelImagesData[0];
             hotel.imageUrl = `${prefix}original${suffix}`;
           } else {
-            hotel.imageUrl = ""; // Default image or leave as blank
+            hotel.imageUrl = "";
           }
           return hotel;
         });
