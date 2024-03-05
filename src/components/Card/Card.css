@@ -6,10 +6,11 @@
   box-shadow: 0px 4px 2px rgb(150, 150, 150);
   transition: all 0.3s ease;
 }
-.results-card:hover {
+/* previous hover effect before framer-motion */
+/* .results-card:hover {
   transform: scale(1.05);
   box-shadow: 0px 4px 4px 2px rgb(150, 150, 150);
-}
+} */
 .results-card-img-container {
   width: 100%;
   overflow: hidden;
@@ -32,8 +33,14 @@
   margin: 0 !important;
 }
 
-/* @media only screen and (max-width: 470px) {
-  .results-card {
-    max-width: 150px;
+@media only screen and (min-width: 1001px) {
+  .results-card-text-container {
+    min-height: 200px;
   }
-} */
+}
+
+@media only screen and (min-width: 1200px) {
+  .results-card-text-container {
+    min-height: 180px;
+  }
+}

@@ -11,8 +11,9 @@
 /* general/ all */
 body {
   background-color: rgb(241, 241, 241);
-  /* max-width: 100%; */
+  min-height: 101vh;
   overflow-x: hidden;
+  overflow-y: scroll;
   display: flex;
   justify-content: center;
   gap: 40px;

@@ -19,33 +19,34 @@ const HotelsResults = ({ submittedInput }) => {
           },
         };
 
-        console.log("Fetching hotels data...");
+        // console.log("Fetching hotels data...");
         const hotelsResponse = await fetch(
           `https://api.foursquare.com/v3/places/search?query=hotel&near=${submittedInput}&sort=POPULARITY`,
           options
         );
 
         const hotelsData = await hotelsResponse.json();
-        console.log("Fetched hotels data:", hotelsData);
+        // console.log("Fetched hotels data:", hotelsData);
 
         const hotelImagePromises = hotelsData.results.map(async (hotel) => {
-          console.log(`Fetching images/details for hotel ${hotel.fsq_id}...`);
+          // console.log(`Fetching images/details for hotel ${hotel.fsq_id}...`);
 
           const hotelDetailsResponse = await fetch(
-            `https://api.foursquare.com/v3/places/${hotel.fsq_id}/`,
+            `https://api.foursquare.com/v3/places/${hotel.fsq_id}/photos?`,
             options
           );
-          if (hotelDetailsResponse.ok) {
-            const hotelDetailsData = await hotelDetailsResponse.json();
-            console.log(
-              `Fetched details for hotel ${hotel.fsq_id}:`,
-              hotelDetailsData
-            );
-          } else {
-            console.error(
-              `Error fetching details for hotel ${hotel.fsq_id}: ${hotelDetailsResponse.statusText}`
-            );
-          }
+          // console.log(hotelDetailsResponse);
+          // if (hotelDetailsResponse.ok) {
+          //   const hotelDetailsData = await hotelDetailsResponse.json();
+          //   console.log(
+          //     `Fetched details for hotel ${hotel.fsq_id}:`,
+          //     hotelDetailsData
+          //   );
+          // } else {
+          //   console.error(
+          //     `Error fetching details for hotel ${hotel.fsq_id}: ${hotelDetailsResponse.statusText}`
+          //   );
+          // }
 
           const hotelImagesResponse = await fetch(
             `https://api.foursquare.com/v3/places/${hotel.fsq_id}/photos?classifications=indoor%2Coutdoor`,
@@ -60,10 +61,10 @@ const HotelsResults = ({ submittedInput }) => {
           }
 
           const hotelImagesData = await hotelImagesResponse.json();
-          console.log(
-            `Fetched images for hotel ${hotel.fsq_id}:`,
-            hotelImagesData
-          );
+          // console.log(
+          //   `Fetched images for hotel ${hotel.fsq_id}:`,
+          //   hotelImagesData
+          // );
 
           if (hotelImagesData && hotelImagesData.length > 0) {
             const { prefix, suffix } = hotelImagesData[0];
