@@ -2,7 +2,7 @@
 import React from "react";
 import "./About.css";
 import Nav from "../../components/Nav/Nav";
-import imageMission from "../../assets/images/mission.jpg";
+import imageMission from "/assets/images/mission.jpg";
 
 const About = () => {
   return (
