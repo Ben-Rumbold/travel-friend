@@ -28,15 +28,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// vilma conditional rendering of place holder image (note: ben renders the load-in images inside their respective components)
-// {
-//   submittedInput ? (
-//     <>
-//       <HotelsResults submittedInput={submittedInput} />
-//       <RestaurantsResults submittedInput={submittedInput} />
-//     </>
-//   ) : (
-//     <PlaceholderImage />
-//   );
-// }
